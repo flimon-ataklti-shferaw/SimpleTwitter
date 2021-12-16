@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Tweet{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-7">
+                {{ object.content }}<br/>
+                {{ object.user }}<br/>
+                {{ object.timestamp|timesince }}
+            </div>
+        <div class="col-md-2"></div>
+        </div>
+    </div>
+{% endblock %}

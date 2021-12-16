@@ -3,12 +3,19 @@
 {% block title %}Tweet{% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-5"></div>
-            <div class="col-md-3">
-                list.html
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-7">
+            {% for object in object_list %}
+            <p>{{ object.content }}<br/>
+                {{ object.user }}<br/>
+                {{ object.timestamp|timesince }} ago</p><br/><br/>
+            {% empty %}
+            <p>No tweets yet.</p>
+            {% endfor %}
         </div>
+        <div class="col-md-2"></div>
     </div>
+</div>
 {% endblock %}
