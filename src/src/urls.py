@@ -9,6 +9,7 @@ from tweets.views import TweetListView
 urlpatterns = [
     path(r'', TweetListView.as_view(), name='home'),
     path(r'tweet/', include('tweets.urls', namespace='tweet')),
+    path(r'api/tweet/', include('tweets.api.urls', namespace='tweet-api')),
 
     path('admin/', admin.site.urls),
 ]
