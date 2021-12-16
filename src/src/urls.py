@@ -4,8 +4,10 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+from tweets.views import TweetListView
+
 urlpatterns = [
-    path(r'', include('accounts.urls', namespace='accounts')),
+    path(r'', TweetListView.as_view(), name='home'),
     path(r'tweet/', include('tweets.urls', namespace='tweet')),
 
     path('admin/', admin.site.urls),
