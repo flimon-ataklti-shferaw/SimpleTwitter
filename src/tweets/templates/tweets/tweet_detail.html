@@ -1,19 +1,14 @@
 {% extends "base.html" %}
 
-
 {% block content %}
-
-<div class="container">
-    <div class='row'>
-        <div class='col-sm-3 col-xs-12' style='background-color:yellow;'>
-            <h1>{{ object.user }} </h1>
-        </div>
-        <div class='col-sm-9 col-xs-12'>
-            {{ object.content }}<br/>
-            <br/>
-            {{ object.timestamp|timesince }}
-        </div>
-
+<div class='row'>
+    <div class='col-sm-3 col-xs-12' style='background-color:yellow;'>
+        <h1>{{ object.user }} </h1>
+    </div>
+    <div class='col-sm-9 col-xs-12'>
+        {{ object.content }}<br/>
+        <br/>
+        {{ object.timestamp|timesince }}
     </div>
 </div>
 {% endblock content %}
@@ -48,7 +43,6 @@
     <div class='col-sm-1' style='background-color:green;'>
         {{ object.user }}
     </div>
-
     <div class='col-sm-1' style='background-color:blue;'>
         {{ object.user }}
     </div>
@@ -61,10 +55,7 @@
     <div class='col-sm-1' style='background-color:green;'>
         {{ object.user }}
     </div>
-
     <div class='col-sm-1' style='background-color:blue;'>
-
     </div>
-
 </div>
 

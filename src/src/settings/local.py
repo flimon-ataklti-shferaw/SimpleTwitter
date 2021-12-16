@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     #my apps
     'accounts',
     'tweets',
+    'hashtags',
     #3rd party
     'crispy_forms',
     'rest_framework',
