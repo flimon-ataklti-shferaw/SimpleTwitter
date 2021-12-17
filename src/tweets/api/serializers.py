@@ -2,7 +2,7 @@ from django.utils.timesince import timesince
 from rest_framework import serializers
 
 from accounts.api.serializers import UserDisplaySerializer
-from tweets.models import Tweet  # from ..models import Tweet
+from tweets.models import Tweet
 
 
 class ParentTweetModelSerializer(serializers.ModelSerializer):
@@ -27,11 +27,13 @@ class ParentTweetModelSerializer(serializers.ModelSerializer):
         ]
 
     def get_did_like(self, obj):
-        request = self.context.get("request")
-        user = request.user
-        if user.is_authenticated:
-            if user in obj.liked.all():
-                return True
+        try:
+            user = request.user
+            if user.is_authenticated:
+                if user in obj.liked.all():
+                    return True
+        except:
+            pass
         return False
 
     def get_likes(self, obj):
@@ -68,14 +70,16 @@ class TweetModelSerializer(serializers.ModelSerializer):
             'did_like',
             'reply',
         ]
-        # read_only_fields = ['reply']
 
     def get_did_like(self, obj):
         request = self.context.get("request")
-        user = request.user
-        if user.is_authenticated:
-            if user in obj.liked.all():
-                return True
+        try:
+            user = request.user
+            if user.is_authenticated:
+                if user in obj.liked.all():
+                    return True
+        except:
+            pass
         return False
 
     def get_likes(self, obj):

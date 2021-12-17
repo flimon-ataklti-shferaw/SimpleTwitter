@@ -7,7 +7,7 @@ from .views import (
     UserFollowView
 )
 
-app_name = 'accounts'
+app_name = 'profiles'
 urlpatterns = [
     url(r'^(?P<username>[\w.@+-]+)/$', UserDetailView.as_view(), name='detail'),  # /tweet/1/
     url(r'^(?P<username>[\w.@+-]+)/follow/$', UserFollowView.as_view(), name='follow'),

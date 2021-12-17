@@ -20,7 +20,7 @@ from .models import Tweet
 class RetweetView(View):
     def get(self, request, pk, *args, **kwargs):
         tweet = get_object_or_404(Tweet, pk=pk)
-        if request.user.is_authenticated:
+        if request.user.is_authenticated():
             new_tweet = Tweet.objects.retweet(request.user, tweet)
             return HttpResponseRedirect("/")
         return HttpResponseRedirect(tweet.get_absolute_url())
@@ -29,14 +29,12 @@ class RetweetView(View):
 class TweetCreateView(FormUserNeededMixin, CreateView):
     form_class = TweetModelForm
     template_name = 'tweets/create_view.html'
-    # success_url = reverse_lazy("tweet:detail")
 
 
 class TweetUpdateView(LoginRequiredMixin, UserOwnerMixin, UpdateView):
     queryset = Tweet.objects.all()
     form_class = TweetModelForm
     template_name = 'tweets/update_view.html'
-    # success_url = "/tweet/"
 
 
 class TweetDeleteView(LoginRequiredMixin, DeleteView):
@@ -68,8 +66,7 @@ class TweetListView(ListView):
         return context
 
 
-def tweet_detail_view(request, pk=None):  # pk == id
-    # obj = Tweet.objects.get(pk=pk) # GET from database
+def tweet_detail_view(request, pk=None):
     obj = get_object_or_404(Tweet, pk=pk)
     print(obj)
     context = {

@@ -21,12 +21,26 @@
         <hr/>
         {% endif %}
     </div>
-    <div class='col-sm-8 col-sm-offset-2'>
+    <div class='col-sm-9 '>
         <h1>Tweets</h1>
         <hr/>
-        <div id='tweet-container' data-url='/api/tags/{{ obj.tag }}/'>
+
+        <div id='tweet-container' data-url='/api/search/'>
+
         </div>
         <a href='#' id='loadmore'>Load More Tweets</a>
+
+
+    </div>
+    <div class='col-sm-3'>
+        <h1>Users</h1>
+        <hr/>
+        {% for user in users %}
+        <a href='/{{ user.username}}/'>{{ user.username}}</a><br/>
+
+        {% empty %}
+        <p>No users found</p>
+        {% endfor %}
     </div>
 </div>
 {% endblock content %}

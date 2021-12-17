@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse_lazy
+# Create your models here.
 
 from tweets.models import Tweet
 from .signals import parsed_hashtags

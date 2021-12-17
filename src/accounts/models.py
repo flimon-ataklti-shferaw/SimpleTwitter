@@ -39,6 +39,8 @@ class UserProfileManager(models.Manager):
 class UserProfile(models.Model):
     user        = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='profile', on_delete=models.CASCADE) # user.profile
     following   = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='followed_by')
+    # user.profile.following -- users i follow
+    # user.followed_by -- users that follow me -- reverse relationship
 
     objects = UserProfileManager() # UserProfile.objects.all()
     # abc = UserProfileManager() # UserProfile.abc.all()
