@@ -1,30 +1,35 @@
-from django.contrib.auth import get_user_model
-from django.http import HttpResponseRedirect
+from django.conf import settings
+from django.contrib.auth import authenticate, login, get_user_model
+from django.views.generic import CreateView, FormView, DetailView
 from django.shortcuts import render, get_object_or_404, redirect
-
 from django.views import View
-from django.views.generic import DetailView
-from django.views.generic.edit import FormView
 
-from .forms import UserRegisterForm
+from .forms import RegisterForm, LoginForm
 from .models import UserProfile
 
-User = get_user_model()
+User = settings.AUTH_USER_MODEL
 
 
-class UserRegisterView(FormView):
-    template_name = 'accounts/user_register_form.html'
-    form_class = UserRegisterForm
-    success_url = '/login'
+class LoginView(FormView):
+    form_class = LoginForm
+    success_url = "/"
+    template_name = "accounts/login.html"
 
     def form_valid(self, form):
-        username = form.cleaned_data.get("username")
+        request = self.request
         email = form.cleaned_data.get("email")
         password = form.cleaned_data.get("password")
-        new_user = User.objects.create(username=username, email=email)
-        new_user.set_password(password)
-        new_user.save()
-        return super(UserRegisterView, self).form_valid(form)
+        user = authenticate(request, username=email, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect("/")
+        return super(LoginView, self).form_valid(form)
+
+
+class RegisterView(CreateView):
+    form_class = RegisterForm
+    template_name = "accounts/register.html"
+    success_url = "/account/login/"
 
 
 class UserDetailView(DetailView):
@@ -34,7 +39,7 @@ class UserDetailView(DetailView):
     def get_object(self):
         return get_object_or_404(
             User,
-            username__iexact=self.kwargs.get("username")
+            email__iexact=self.kwargs.get("email")
         )
 
     def get_context_data(self, *args, **kwargs):
@@ -46,8 +51,8 @@ class UserDetailView(DetailView):
 
 
 class UserFollowView(View):
-    def get(self, request, username, *args, **kwargs):
-        toggle_user = get_object_or_404(User, username__iexact=username)
+    def get(self, request, email, *args, **kwargs):
+        toggle_user = get_object_or_404(User, email__iexact=email)
         if request.user.is_authenticated:
             is_following = UserProfile.objects.toggle_follow(request.user, toggle_user)
-        return redirect("profiles:detail", username=username)
+        return redirect("profiles:detail", email=email)

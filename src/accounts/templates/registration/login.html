@@ -15,7 +15,7 @@
 <div class='col-sm-6 col-sm-offset-3 text-center'>
     <h1>Login</h1>
     {% if form.errors %}
-    <p>Your username and password didn't match. Please try again.</p>
+    <p>Your email and password didn't match. Please try again.</p>
     {% endif %}
 
     {% if next %}
@@ -23,23 +23,22 @@
     <p>Your account doesn't have access to this page. To proceed,
         please login with an account that has access.</p>
     {% else %}
-    <p>Please login to see this page.</p>
+    <p>Welcome back to Simple Twitter</p>
     {% endif %}
     {% endif %}
 
-    <form method="post" action="{% url 'login' %}">
-        {% csrf_token %}
+    <form method='POST'> {% csrf_token %}
         <div class="form-group">
-            {{ form.username.label_tag }}
-            {{ form.username }}
+            <input type='email' name='email' id='email' class="form-control"
+                   placeholder="Email">
         </div>
         <div class="form-group">
-            {{ form.password.label_tag }}
-            {{ form.password }}
+            <input type='password' name='password' id='password' class="form-control"
+                   placeholder="Password">
         </div>
         <button type="submit" class='btn btn-default'>Login</button>
-        <input type="hidden" name="next" value="{{ next }}"/>
     </form>
+
     <a href="{% url 'register' %}">Don't have account yet?</a>
 </div>
 {% endblock %}
