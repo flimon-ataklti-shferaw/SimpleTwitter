@@ -5,7 +5,7 @@ from .models import Tweet
 class TweetModelForm(forms.ModelForm):
     content = forms.CharField(label='',
                               widget=forms.Textarea(
-                                  attrs={'placeholder': "Your message",
+                                  attrs={'placeholder': "What's happening?",
                                          "class": "form-control"}
                               ))
     class Meta:

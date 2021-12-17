@@ -5,10 +5,14 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
 
+from accounts.views import UserRegisterView
+
 from hashtags.api.views import TagTweetAPIView
 from hashtags.views import HashTagView
+
 from tweets.api.views import SearchTweetAPIView
 from tweets.views import TweetListView
+
 from .views import SearchView
 
 urlpatterns = [
@@ -22,6 +26,9 @@ urlpatterns = [
     path(r'search/', SearchView.as_view(), name='search'),
     url(r'^tags/(?P<hashtag>.*)/$', HashTagView.as_view(), name='hashtag'),
     path(r'api/search/', SearchTweetAPIView.as_view(), name='search-api'),
+
+    path(r'register/', UserRegisterView.as_view(), name='register'),  # /
+    path(r'', include('django.contrib.auth.urls')),
 
     path(r'api/', include('accounts.api.urls', namespace='profiles-api')),
     path(r'', include('accounts.urls', namespace='profiles')),

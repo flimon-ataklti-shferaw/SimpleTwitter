@@ -20,7 +20,7 @@ from .models import Tweet
 class RetweetView(View):
     def get(self, request, pk, *args, **kwargs):
         tweet = get_object_or_404(Tweet, pk=pk)
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             new_tweet = Tweet.objects.retweet(request.user, tweet)
             return HttpResponseRedirect("/")
         return HttpResponseRedirect(tweet.get_absolute_url())
@@ -47,7 +47,7 @@ class TweetDetailView(DetailView):
     queryset = Tweet.objects.all()
 
 
-class TweetListView(ListView):
+class TweetListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self, *args, **kwargs):
         qs = Tweet.objects.all()
@@ -68,7 +68,6 @@ class TweetListView(ListView):
 
 def tweet_detail_view(request, pk=None):
     obj = get_object_or_404(Tweet, pk=pk)
-    print(obj)
     context = {
         "object": obj
     }
