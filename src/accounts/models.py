@@ -3,7 +3,6 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.urls import reverse_lazy
 
-# Create your models here.
 
 class UserProfileManager(models.Manager):
     use_for_related_fields = True
@@ -40,8 +39,6 @@ class UserProfileManager(models.Manager):
 class UserProfile(models.Model):
     user        = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='profile', on_delete=models.CASCADE) # user.profile
     following   = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='followed_by')
-    # user.profile.following -- users i follow
-    # user.followed_by -- users that follow me -- reverse relationship
 
     objects = UserProfileManager() # UserProfile.objects.all()
     # abc = UserProfileManager() # UserProfile.abc.all()
@@ -60,21 +57,11 @@ class UserProfile(models.Model):
         return reverse_lazy("profiles:detail", kwargs={"username":self.user.username})
 
 
-
-
-# cfe = User.objects.first()
-# User.objects.get_or_create() # (user_obj, true/false)
-# cfe.save()
-
 def post_save_user_receiver(sender, instance, created, *args, **kwargs):
     if created:
         new_profile = UserProfile.objects.get_or_create(user=instance)
-        # celery + redis
-        # deferred task
 
 post_save.connect(post_save_user_receiver, sender=settings.AUTH_USER_MODEL)
-
-
 
 
 
