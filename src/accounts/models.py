@@ -77,7 +77,7 @@ class User(AbstractBaseUser):
         return self.admin
 
 
-class UserProfileManager(models.Manager):
+class ProfileManager(models.Manager):
     use_for_related_fields = True
 
     def all(self):
@@ -116,30 +116,29 @@ class UserProfileManager(models.Manager):
         return qs
 
 
-class UserProfile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='profile',
-                                on_delete=models.CASCADE)
-    following = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='followed_by')
+class Profile(models.Model):
+    user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
+    following = models.ManyToManyField(User, blank=True, related_name='followed_by')
 
-    objects = UserProfileManager()
+    objects = ProfileManager()
 
     def __str__(self):
         return str(self.following.all().count())
 
     def get_following(self):
         users = self.following.all()
-        return users.exclude(username=self.user.username)
+        return users.exclude(email=self.user.email)
 
     def get_follow_url(self):
-        return reverse_lazy("profiles:follow", kwargs={"username": self.user.username})
+        return reverse_lazy("profiles:follow", kwargs={"email": self.user.email})
 
     def get_absolute_url(self):
-        return reverse_lazy("profiles:detail", kwargs={"username": self.user.username})
+        return reverse_lazy("profiles:detail", kwargs={"email": self.user.email})
 
 
 def post_save_user_receiver(sender, instance, created, *args, **kwargs):
     if created:
-        new_profile = UserProfile.objects.get_or_create(user=instance)
+        new_profile = Profile.objects.get_or_create(user=instance)
 
 
-post_save.connect(post_save_user_receiver, sender=settings.AUTH_USER_MODEL)
+post_save.connect(post_save_user_receiver, sender=User)

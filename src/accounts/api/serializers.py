@@ -1,10 +1,9 @@
 from django.conf import settings
-from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
 
 from rest_framework import serializers
 
-User = settings.AUTH_USER_MODEL
+from accounts.models import User
 
 
 class UserDisplaySerializer(serializers.ModelSerializer):

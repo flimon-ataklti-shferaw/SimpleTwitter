@@ -5,9 +5,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 
 from .forms import RegisterForm, LoginForm
-from .models import UserProfile
+from .models import User, Profile
 
-User = settings.AUTH_USER_MODEL
+#User = settings.AUTH_USER_MODEL
 
 
 class LoginView(FormView):
@@ -19,7 +19,7 @@ class LoginView(FormView):
         request = self.request
         email = form.cleaned_data.get("email")
         password = form.cleaned_data.get("password")
-        user = authenticate(request, username=email, password=password)
+        user = authenticate(request, email=email, password=password)
         if user is not None:
             login(request, user)
             return redirect("/")

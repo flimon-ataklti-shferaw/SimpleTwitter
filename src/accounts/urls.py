@@ -11,8 +11,8 @@ from .views import (
 
 app_name = 'profiles'
 urlpatterns = [
-    url(r'^(?P<email>[\w.@+-]+)/$', UserDetailView.as_view(), name='detail'),
-    url(r'^(?P<email>[\w.@+-]+)/follow/$', UserFollowView.as_view(), name='follow'),
-    path(r'login/', LoginView.as_view, name='login'),
-    path(r'register/', RegisterView.as_view, name='register'),
+    #url(r'^(?P<email>[\w.@+-]+)/$', UserDetailView.as_view(), name='detail'),
+    #url(r'^(?P<email>[\w.@+-]+)/follow/$', UserFollowView.as_view(), name='follow'),
+    path(r'login/', LoginView.as_view(), name='login'),
+    path(r'register/', RegisterView.as_view(), name='register'),
 ]
