@@ -77,7 +77,7 @@ class SearchTweetAPIView(generics.ListAPIView):
         if query is not None:
             qs = qs.filter(
                 Q(content__icontains=query) |
-                Q(user__username__icontains=query)
+                Q(user__email__icontains=query)
             )
         return qs
 
@@ -92,10 +92,10 @@ class TweetListAPIView(generics.ListAPIView):
         return context
 
     def get_queryset(self, *args, **kwargs):
-        requested_user = self.kwargs.get("username")
+        requested_user = self.kwargs.get("email")
 
         if requested_user:
-            qs = Tweet.objects.filter(user__username=requested_user).order_by("-timestamp")
+            qs = Tweet.objects.filter(user__email=requested_user).order_by("-timestamp")
         else:
             im_following = self.request.user.profile.get_following()  # none
             qs1 = Tweet.objects.filter(user__in=im_following)
@@ -106,7 +106,7 @@ class TweetListAPIView(generics.ListAPIView):
         if query is not None:
             qs = qs.filter(
                 Q(content__icontains=query) |
-                Q(user__username__icontains=query)
+                Q(user__email__icontains=query)
             )
         return qs
 
@@ -121,6 +121,6 @@ class SearchAPIView(generics.ListAPIView):
         if query is not None:
             qs = qs.filter(
                 Q(content__icontains=query) |
-                Q(user__username__icontains=query)
+                Q(user__email__icontains=query)
             )
         return qs

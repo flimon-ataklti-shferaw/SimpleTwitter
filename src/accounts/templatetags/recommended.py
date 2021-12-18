@@ -1,11 +1,8 @@
 from django import template
-from django.contrib.auth import get_user_model
 
-from accounts.models import Profile
+from accounts.models import Profile, User
 
 register = template.Library()
-
-User = get_user_model()
 
 
 @register.inclusion_tag("accounts/snippets/recommend.html")

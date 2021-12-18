@@ -35,7 +35,7 @@ class TagTweetAPIView(generics.ListAPIView):
             if query is not None:
                 qs = qs.filter(
                         Q(content__icontains=query) |
-                        Q(user__username__icontains=query)
+                        Q(user__email__icontains=query)
                         )
             return qs
         return None

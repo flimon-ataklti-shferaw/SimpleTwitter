@@ -3,7 +3,11 @@ from django.conf.urls.static import static
 from django.conf.urls import url
 
 from django.contrib import admin
+
+from django.contrib.auth.views import LogoutView
 from django.urls import path, include
+
+from accounts.views import LoginView, RegisterView
 
 from hashtags.api.views import TagTweetAPIView
 from hashtags.views import HashTagView
@@ -26,9 +30,12 @@ urlpatterns = [
     path(r'api/search/', SearchTweetAPIView.as_view(), name='search-api'),
 
     #path(r'', include('django.contrib.auth.urls')),
+    path(r'login/', LoginView.as_view(), name='login'),
+    path(r'register/', RegisterView.as_view(), name='register'),
+    path(r'logout/', LogoutView.as_view(), name='logout'),
 
+    path(r'', include('accounts.urls', namespace='profiles')),
     path(r'api/', include('accounts.api.urls', namespace='profiles-api')),
-    path(r'account/', include('accounts.urls', namespace='profiles')),
 ]
 if settings.DEBUG:
     urlpatterns = urlpatterns + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

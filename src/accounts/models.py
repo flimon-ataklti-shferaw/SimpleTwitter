@@ -90,7 +90,7 @@ class ProfileManager(models.Manager):
         return qs
 
     def toggle_follow(self, user, to_toggle_user):
-        user_profile, created = UserProfile.objects.get_or_create(user=user)
+        user_profile, created = Profile.objects.get_or_create(user=user)
         if to_toggle_user in user_profile.following.all():
             user_profile.following.remove(to_toggle_user)
             added = False
@@ -100,7 +100,7 @@ class ProfileManager(models.Manager):
         return added
 
     def is_following(self, user, followed_by_user):
-        user_profile, created = UserProfile.objects.get_or_create(user=user)
+        user_profile, created = Profile.objects.get_or_create(user=user)
         if created:
             return False
         if followed_by_user in user_profile.following.all():
@@ -108,7 +108,6 @@ class ProfileManager(models.Manager):
         return False
 
     def recommended(self, user, limit_to=10):
-        print(user)
         profile = user.profile
         following = profile.following.all()
         following = profile.get_following()

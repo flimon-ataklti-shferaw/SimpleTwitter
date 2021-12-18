@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.urls import reverse_lazy
 
 from rest_framework import serializers
@@ -22,4 +21,4 @@ class UserDisplaySerializer(serializers.ModelSerializer):
         return 0
 
     def get_url(self, obj):
-        return reverse_lazy("profiles:detail", kwargs={"email": obj.email})
+        return reverse_lazy("profiles:detail", kwargs={"email": obj.email })
