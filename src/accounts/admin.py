@@ -1,36 +1,36 @@
+from django import forms
 from django.contrib import admin
-from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.models import Group
 
-from .forms import UserAdminCreationForm, UserAdminChangeForm
 
-from .models import User, Profile
+from .models import MyUser, UserProfile
+from .forms import UserCreationForm, UserChangeForm
 
 
 class UserAdmin(BaseUserAdmin):
-    form = UserAdminChangeForm #update view
-    add_form = UserAdminCreationForm #create view
+    form = UserChangeForm
+    add_form = UserCreationForm
 
-    list_display = ['email', 'active', 'staff', 'admin']
-    list_filter = ['admin', 'staff', 'active']
+    list_display = ('name', 'email', 'is_active', 'is_staff', 'is_admin')
+    list_filter = ('is_active', 'is_staff', 'is_admin')
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
-        ('Permissions', {'fields': ('admin', 'staff', 'active')}),
+        (None, {'fields': ('name', 'email', 'password')}),
+        # ('Personal info', {'fields': ('name',)}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_admin',)}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password', 'password2')}
-         ),
+            'fields': ('name', 'email', 'password1', 'password2'),
+        }),
     )
-    search_fields = ['email']
-    ordering = ['email']
+    search_fields = ('name', 'email',)
+    ordering = ('name', 'email',)
     filter_horizontal = ()
 
 
-admin.site.register(User, UserAdmin)
+admin.site.register(MyUser, UserAdmin)
 
-admin.site.register(Profile)
 
-admin.site.unregister(Group)
-
+admin.site.register(UserProfile)

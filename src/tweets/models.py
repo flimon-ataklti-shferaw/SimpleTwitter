@@ -82,8 +82,8 @@ class Tweet(models.Model):
 
 def tweet_save_receiver(sender, instance, created, *args, **kwargs):
     if created and not instance.parent:
-        user_regex = r'@(?P<username>[\w.@+-]+)'
-        usernames = re.findall(user_regex, instance.content)
+        user_regex = r'@(?P<name>[\w.@+-]+)'
+        users = re.findall(user_regex, instance.content)
 
         hash_regex = r'#(?P<hashtag>[\w\d-]+)'
         hashtags = re.findall(hash_regex, instance.content)

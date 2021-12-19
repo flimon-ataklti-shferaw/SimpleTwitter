@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Sign up{% endblock title %}
+
+
+{% block content %}
+<div class='row'>
+    <div class='col-sm-6 col-sm-offset-3'>
+        <h1>Sign up</h1>
+        {% include "accounts/snippets/form.html" with form=form %}
+        <a href="{% url 'login' %}">Already registered?</a>
+    </div>
+</div>
+{% endblock content %}
+
+

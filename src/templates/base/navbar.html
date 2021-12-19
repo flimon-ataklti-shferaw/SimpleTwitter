@@ -19,12 +19,12 @@
                        aria-expanded="false">Account <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="{{ request.user.profile.get_absolute_url }}">Profile</a>
-                        <li><a href="/logout/">Logout</a></li>
+                        <li><a href="{% url 'logout' %}">Logout</a></li>
                     </ul>
                 </li>
                 {% else %}
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/login/"><i class="far fa-user fa-2x"></i></a></li>
+                    <li><a href="{% url 'login' %}"><i class="far fa-user fa-2x"></i></a></li>
                 </ul>
                 {% endif %}
             </ul>

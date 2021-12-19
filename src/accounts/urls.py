@@ -4,11 +4,11 @@ from django.views.generic.base import RedirectView
 
 from .views import (
     UserDetailView,
-    UserFollowView,
+    UserFollowView
 )
 
 app_name = 'profiles'
 urlpatterns = [
-    url(r'^(?P<email>[\w.@+-]+)/$', UserDetailView.as_view(), name='detail'),
-    url(r'^(?P<email>[\w.@+-]+)/follow/$', UserFollowView.as_view(), name='follow'),
+    url(r'^(?P<name>[\w.@+-]+)/$', UserDetailView.as_view(), name='detail'),  # /tweet/1/
+    url(r'^(?P<name>[\w.@+-]+)/follow/$', UserFollowView.as_view(), name='follow'),
 ]

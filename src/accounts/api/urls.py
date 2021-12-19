@@ -8,5 +8,5 @@ from tweets.api.views import (
 
 app_name = "profiles-api"
 urlpatterns = [
-    url(r'^(?P<username>[\w.@+-]+)/tweet/$', TweetListAPIView.as_view(), name='list'),  # /api/tweet/
+    url(r'^(?P<email>[\w.@+-]+)/tweet/$', TweetListAPIView.as_view(), name='list'),  # /api/tweet/
 ]
