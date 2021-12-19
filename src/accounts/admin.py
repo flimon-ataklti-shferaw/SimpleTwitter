@@ -34,3 +34,4 @@ admin.site.register(MyUser, UserAdmin)
 
 
 admin.site.register(UserProfile)
+admin.site.unregister(Group)

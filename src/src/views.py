@@ -12,7 +12,7 @@ class SearchView(View):
         qs = None
         if query:
             qs = User.objects.filter(
-                Q(username__icontains=query)
+                Q(name__icontains=query)
             )
         context = {"users": qs}
         return render(request, "search.html", context)

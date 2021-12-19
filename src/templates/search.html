@@ -36,7 +36,7 @@
         <h1>Users</h1>
         <hr/>
         {% for user in users %}
-        <a href='/{{ user.username}}/'>{{ user.username}}</a><br/>
+        <a href='/{{ user.name}}/'>{{ user.name}}</a><br/>
 
         {% empty %}
         <p>No users found</p>
