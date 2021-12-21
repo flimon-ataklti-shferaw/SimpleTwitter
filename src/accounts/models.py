@@ -7,6 +7,8 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.urls import reverse_lazy
 
+from .utils import code_generator
+
 NAME_REGEX = '^[a-zA-Z]*$'
 
 
@@ -76,6 +78,24 @@ class MyUser(AbstractBaseUser):
     # def is_staff(self):
     #     return self.is_admin
 
+class UserProfileActivation(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    key = models.CharField(max_length=120)
+    expired = models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        self.key = code_generator()
+        super(UserProfileActivation, self).save(*args, **kwargs)
+
+
+def post_save_activation_receiver(sender, instance, created, *args, **kwargs):
+    if created:
+        # send email
+        # url = "127.0.0.1:8000/activate/" + instance.key
+        print("activation code send")
+
+
+post_save.connect(post_save_activation_receiver, sender=UserProfileActivation)
 
 class UserProfileManager(models.Manager):
     use_for_related_fields = True
@@ -139,6 +159,7 @@ class UserProfile(models.Model):
 def post_save_user_receiver(sender, instance, created, *args, **kwargs):
     if created:
         new_profile = UserProfile.objects.get_or_create(user=instance)
+        UserProfileActivation.objects.create(user=instance)
 
 
 post_save.connect(post_save_user_receiver, sender=settings.AUTH_USER_MODEL)

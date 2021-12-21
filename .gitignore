@@ -1,1 +1,5 @@
 # Use this to ignore some files from git
+.idea
+pyvenv.cfg
+bin
+lib

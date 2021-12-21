@@ -19,6 +19,8 @@ class UserLoginForm(forms.Form):
         else:
             if not user_obj.check_password(password):
                 raise forms.ValidationError("Invalid Credentials --  invalid password")
+            if not user_obj.is_active:
+                raise forms.ValidationError("Inactive user -- please verify your email address")
         # method 2 of using authentication
         # the_user = authenticate(email=email, password=password)
         # if not the_user:
@@ -45,6 +47,7 @@ class UserCreationForm(forms.ModelForm):
     def save(self, commit=True):
         user = super().save(commit=False)
         user.set_password(self.cleaned_data["password1"])
+        user.is_active = False
         if commit:
             user.save()
         return user

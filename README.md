@@ -10,4 +10,7 @@ For admin, Use
     Password = test 
 or just create another admin, if you feel like to 😁
 
+After creating new account, an activation code will be created, copy it and 
+localhost:8000/activate/<code> will activate the account so it can login
+
 More features on the way.....

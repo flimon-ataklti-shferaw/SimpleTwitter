@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/teliyaduinfinity/Desktop/SimpleTwitter"
+VIRTUAL_ENV="/Users/teliyaduinfinity/Desktop/GITHUB/SimpleTwitter"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

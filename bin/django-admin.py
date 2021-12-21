@@ -1,4 +1,4 @@
-#!/Users/teliyaduinfinity/Desktop/SimpleTwitter/bin/python3
+#!/Users/teliyaduinfinity/Desktop/GITHUB/SimpleTwitter/bin/python3
 # When the django-admin.py deprecation ends, remove this script.
 import warnings
 
